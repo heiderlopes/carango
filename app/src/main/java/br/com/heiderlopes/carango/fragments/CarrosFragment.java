@@ -1,5 +1,6 @@
 package br.com.heiderlopes.carango.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -10,11 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.heiderlopes.carango.CarroDetalheActivity;
 import br.com.heiderlopes.carango.R;
 import br.com.heiderlopes.carango.adapter.CarroListAdapter;
 import br.com.heiderlopes.carango.api.CarroAPI;
@@ -74,10 +74,10 @@ public class CarrosFragment extends Fragment implements Callback<List<Carro>> {
         return new CarroListAdapter.CarroOnClickListener() {
             @Override
             public void onClickCarro(View view, int idx) {
-                /*Carro c = carros.get(idx);
+                Carro c = carros.get(idx);
                 Intent intent = new Intent(getContext(), CarroDetalheActivity.class);
                 intent.putExtra("carro", c);
-                startActivity(intent);*/
+                startActivity(intent);
             }
         };
     }
@@ -85,7 +85,8 @@ public class CarrosFragment extends Fragment implements Callback<List<Carro>> {
     //Chamada caso de de sucesso na requisicao
     @Override
     public void onResponse(Call<List<Carro>> call, Response<List<Carro>> response) {
-        recyclerView.setAdapter(new CarroListAdapter(getContext(), response.body(), onClickCarro()));
+        carros = response.body();
+        recyclerView.setAdapter(new CarroListAdapter(getContext(), carros, onClickCarro()));
     }
 
     //Chamada caso de erro na requisicao

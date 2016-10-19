@@ -1,6 +1,8 @@
 package br.com.heiderlopes.carango.model;
 
-public class Carro {
+import java.io.Serializable;
+
+public class Carro implements Serializable{
 
     private String nome;
     private String desc;
